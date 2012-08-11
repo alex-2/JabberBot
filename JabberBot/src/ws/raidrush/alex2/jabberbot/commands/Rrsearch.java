@@ -3,6 +3,7 @@ package ws.raidrush.alex2.jabberbot.commands;
 // import java.util.Arrays;
 
 import java.io.BufferedReader;
+
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
@@ -17,6 +18,8 @@ import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.packet.Message;
 // import org.jivesoftware.smack.util.Base64;
 import org.jivesoftware.smackx.muc.MultiUserChat;
+
+import com.tecnick.htmlutils.htmlentities.HTMLEntities;
 
 public class Rrsearch extends ACommand
 {
@@ -84,7 +87,6 @@ public class Rrsearch extends ACommand
         build.append(line);
       
       String body = build.toString();
-      
       int start = body.indexOf(" id=\"thread_title_");
       
       if (start == -1) {
@@ -98,6 +100,7 @@ public class Rrsearch extends ACommand
       String title = body.substring(start + 18);
       title = title.substring(0, title.indexOf("<"));
       title = title.substring(title.indexOf(">") + 1);
+      title = HTMLEntities.unhtmlentities(title);
       
       this.sendToRoom(title + " -> http://board.raidrush.ws/showthread.php?t=" + res);
       
